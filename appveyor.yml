@@ -5,11 +5,12 @@ assembly_info:
   patch: false
 
 before_build:
-  - dotnet restore --configfile .nuget/NuGet.Config
+  - dotnet restore
+  - nuget restore
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
 
 build_script:
-  - ps: dotnet build /p:GenerateAssemblyInfo=false --configuration release 
+  - ps: dotnet build /p:GenerateAssemblyInfo=false --configuration release --no-restore
 
 after_build:
   - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
