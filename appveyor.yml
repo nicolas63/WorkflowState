@@ -1,0 +1,25 @@
+install:
+  - choco install gitversion.portable -pre -y
+
+assembly_info:
+  patch: false
+
+before_build:
+  - dotnet restore --configfile .nuget/NuGet.Config
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+
+build_script:
+  - ps: dotnet build /p:GenerateAssemblyInfo=false --configuration release --no-restore
+
+after_build:
+  - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+
+#test_script:
+#  - ps: dotnet test src/WorkflowState.Tests/WorkflowState.Tests.csproj --configuration release
+
+# deployment_script:
+#   - cmd: appveyor PushArtifact "<NuSpec>.%GitVersion_NuGetVersion%.nupkg" 
+
+artifacts:
+  - path: '*.nupkg'
+    name: WorkflowState

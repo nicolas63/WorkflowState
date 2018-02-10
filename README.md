@@ -1,2 +1,2 @@
 # WorkflowState
-Simple workflow state management 
+Simple workflow management 

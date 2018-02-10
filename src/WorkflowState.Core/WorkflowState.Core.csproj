@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Nicolas Raymond</Authors>
+    <Description>Simple workflow management</Description>
+    <Copyright>Copyright ©  2018</Copyright>
   </PropertyGroup>
 
 </Project>
