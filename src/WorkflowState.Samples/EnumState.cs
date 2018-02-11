@@ -3,6 +3,7 @@
     enum EnumState
     {
         Start,
+        Intermediate,
         End
     }
 }

@@ -4,11 +4,13 @@ namespace WorkflowState.Core
 {
     public class GenericWorkflowConfiguration<TState,TTrigger> : IWorkflowConfiguration<TState, TTrigger>
     {
-        public IList<GenericTransition<TState,TTrigger>> Transitions { get; set; } = new List<GenericTransition<TState, TTrigger>>();
+        internal IList<GenericTransition<TState,TTrigger>> Transitions { get; } = new List<GenericTransition<TState, TTrigger>>();
 
-        public void CreateTransition(TState fromState , TState toState, TTrigger when)
+        public GenericTransition<TState, TTrigger> CreateTransition(TState fromState , TState toState, TTrigger when)
         {
-            Transitions.Add(new GenericTransition<TState,TTrigger>(fromState,toState,when));
+            var transition = new GenericTransition<TState, TTrigger>(fromState, toState, when);
+            Transitions.Add(transition);
+            return transition;
         }
 
     }
