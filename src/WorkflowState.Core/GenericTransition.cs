@@ -1,16 +1,31 @@
 ﻿namespace WorkflowState.Core
 {
-    public class GenericTransition<TState,TTrigger>
+    public class GenericTransition<TState, TTrigger>
     {
-        public TState FromState { get; set; }
-        public TState ToState { get; set; }
-        public TTrigger When { get; set; }
+        internal TState FromState { get; }
+        internal TState ToState { get; }
+        internal TTrigger When { get; }
+        internal bool IsFirstTransition { get; set; }
+        internal bool IsLastTransition { get; set; }
 
         public GenericTransition(TState fromState, TState toState, TTrigger when)
         {
             FromState = fromState;
             ToState = toState;
             When = when;
+        }
+
+        public GenericTransition<TState, TTrigger> AsFirstTransition()
+        {
+            IsFirstTransition = true;
+            return this;
+        }
+
+
+        public GenericTransition<TState, TTrigger> AsLastTransition()
+        {
+            IsLastTransition = true;
+            return this;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WorkflowState.Core
 {
     public class SpecificWorkflow<TState,TTrigger,TObjectToVerify> : GenericWorkflow<TState,TTrigger>
     {
-        private IList<SpecificTransition<TState, TTrigger,TObjectToVerify>> Transitions { get; set; }
+       // internal new IList<SpecificTransition<TState, TTrigger,TObjectToVerify>> Transitions { get; private set; }
         
         public void Configure(Action<ISpecificWorkflowConfiguration<TState, TTrigger, TObjectToVerify>> configuration)
         {
@@ -17,9 +17,15 @@ namespace WorkflowState.Core
 
         public TState GetNextState(TState currentState, TTrigger trigger, TObjectToVerify itemToVerify)
         {
-            var state = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
-            var isVerify = state.Verify(itemToVerify);
-            return isVerify ? state.ToState : currentState;
+            var transition = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
+            var specifictransition = transition as SpecificTransition<TState, TTrigger, TObjectToVerify>;
+            var isVerify = specifictransition?.Verify(itemToVerify);
+            if (isVerify.HasValue)
+            {
+                return isVerify.Value ? transition.ToState : currentState;
+            }
+
+            return transition.ToState;
         }
     }
 }

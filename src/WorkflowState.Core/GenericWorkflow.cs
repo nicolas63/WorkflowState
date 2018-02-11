@@ -6,7 +6,7 @@ namespace WorkflowState.Core
 {
     public class GenericWorkflow<TState,TTrigger>
     {
-        private IList<GenericTransition<TState, TTrigger>> Transitions { get; set; }
+        internal IList<GenericTransition<TState, TTrigger>> Transitions { get; set; }
         
         public void Configure(Action<IWorkflowConfiguration<TState,TTrigger>> configuration)
         {
@@ -15,10 +15,10 @@ namespace WorkflowState.Core
             Transitions = workflowConfiguration.Transitions;
         }
 
-        public virtual TState GetNextState(TState currentState, TTrigger trigger)
+        public TState GetNextState(TState currentState, TTrigger trigger)
         {
-            var state = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
-            return state.ToState;
+            var transition = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
+            return transition.ToState;
         }
     }
 
