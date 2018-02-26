@@ -15,11 +15,14 @@ build_script:
 after_build:
   - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
 
-#test_script:
-#  - ps: dotnet test src/WorkflowState.Tests/WorkflowState.Tests.csproj --configuration release
+test_script:
+  - cmd: dotnet test src/WorkflowState.Tests/WorkflowState.Tests.csproj --configuration release
 
-# deployment_script:
-#   - cmd: appveyor PushArtifact "<NuSpec>.%GitVersion_NuGetVersion%.nupkg" 
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: DiBe9NHNckgVo/QjZqlPU4OUYQ5YtuF8w9GpQzQkgj5Nio+ElpZGQdj6V4EENyJa
+    skip_symbols: true
 
 artifacts:
   - path: '*.nupkg'

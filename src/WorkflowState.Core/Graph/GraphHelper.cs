@@ -12,7 +12,7 @@ namespace WorkflowState.Core.Graph
             StartGraph(ref stringBuilder);
             foreach (var workflowTransition in workflow.Transitions)
             {
-                stringBuilder.AppendLine($"{workflowTransition.FromState} -> {workflowTransition.ToState} [label={workflowTransition.When}];");
+                FormatGenericTransition(ref stringBuilder, workflowTransition);
             }
             EndGraph(ref stringBuilder, workflow.Transitions);
             return stringBuilder.ToString();

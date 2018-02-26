@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowState.Tests", "src\WorkflowState.Tests\WorkflowState.Tests.csproj", "{A22D3D10-E5E8-44FB-AD31-3A89362027D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowState.Samples", "src\WorkflowState.Samples\WorkflowState.Samples.csproj", "{B995C8F3-AD64-43F0-A13A-3B2787B7BAF3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9A6401E-DA9C-49F1-845B-A9F6DC7B6409} = {A9A6401E-DA9C-49F1-845B-A9F6DC7B6409}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,9 +5,9 @@
         internal TState FromState { get; }
         internal TState ToState { get; }
         internal TTrigger When { get; }
-        internal bool IsFirstTransition { get; set; }
-        internal bool IsLastTransition { get; set; }
-
+        internal bool IsFirstTransition { get; private set; }
+        internal bool IsLastTransition { get; private set; }
+        
         public GenericTransition(TState fromState, TState toState, TTrigger when)
         {
             FromState = fromState;
