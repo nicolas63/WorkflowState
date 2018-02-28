@@ -6,7 +6,13 @@
         <authors>Nicolas Raymond</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Simple workflow management.</description>
+        <licenseUrl>https://github.com/nicolas63/WorkflowState/blob/develop/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/nicolas63/WorkflowState/tree/develop</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
     </metadata>
+     <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
     <files>
         <file src="..\src\WorkflowState.Core\bin\Release\netstandard2.0\WorkflowState.Core.dll" target="lib\netstandard2.0\WorflowState.Core.dll" />
     </files>
