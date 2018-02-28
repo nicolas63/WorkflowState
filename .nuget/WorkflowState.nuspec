@@ -8,7 +8,6 @@
         <description>Simple workflow management.</description>
         <licenseUrl>https://github.com/nicolas63/WorkflowState/blob/develop/LICENSE.md</licenseUrl>
         <projectUrl>https://github.com/nicolas63/WorkflowState/tree/develop</projectUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
     </metadata>
      <dependencies>
       <group targetFramework=".NETStandard2.0" />
