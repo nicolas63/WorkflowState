@@ -5,6 +5,8 @@
     <Authors>Nicolas Raymond</Authors>
     <Description>Simple workflow management</Description>
     <Copyright>Copyright ©  2018</Copyright>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>TheKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 </Project>
