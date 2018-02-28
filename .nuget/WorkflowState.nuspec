@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>WorkflowState.Core</id>
         <version>1.0.0</version>
@@ -8,10 +8,11 @@
         <description>Simple workflow management.</description>
         <licenseUrl>https://github.com/nicolas63/WorkflowState/blob/develop/LICENSE.md</licenseUrl>
         <projectUrl>https://github.com/nicolas63/WorkflowState/tree/develop</projectUrl>
-    </metadata>
-     <dependencies>
-      <group targetFramework=".NETStandard2.0" />
-    </dependencies>
+        <copyright>Copyright ©  2018</copyright>
+        <dependencies>
+             <group targetFramework=".NETStandard2.0" />
+        </dependencies>
+    </metadata>     
     <files>
         <file src="..\src\WorkflowState.Core\bin\Release\netstandard2.0\WorkflowState.Core.dll" target="lib\netstandard2.0\WorflowState.Core.dll" />
     </files>
