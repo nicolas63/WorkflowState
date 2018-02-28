@@ -10,7 +10,7 @@ before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
 
 build_script:
-  - cmd: msbuild /p:AssemblyVersion=%GitVersion_AssemblySemVer% /p:Version=%GitVersion_InformationalVersion%  /p:FileVersion=%GitVersion_AssemblySemVer%  --configuration release --no-restore
+  - cmd: msbuild /p:AssemblyVersion=%GitVersion_AssemblySemVer% /p:Version=%GitVersion_InformationalVersion%  /p:FileVersion=%GitVersion_AssemblySemVer%  /property:Configuration=Release
 
 after_build:
   - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
