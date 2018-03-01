@@ -55,11 +55,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WorflowState.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=3fd4810135b44682, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\WorkflowState.Core.0.1.0-unstable0035\lib\netstandard2.0\WorflowState.Core.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumState.cs" />
@@ -83,6 +78,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WorkflowState.Core\WorkflowState.Core.csproj">
+      <Project>{a9a6401e-da9c-49f1-845b-a9f6dc7b6409}</Project>
+      <Name>WorkflowState.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
