@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using WorkflowState.Core.Exceptions;
 
@@ -16,19 +15,10 @@ namespace WorkflowState.Core
 
         public TState GetNextState(TState currentState, TTrigger trigger, TObjectToVerify itemToVerify)
         {
-            var transition = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
-            if (transition == null)
-            {
-                throw new UnvalidTransitionException("This transition was unvalid verify your workflow configuration");
-            }
-            var specifictransition = transition as SpecificTransition<TState, TTrigger, TObjectToVerify>;
-            var isVerify = specifictransition?.Verify(itemToVerify);
-            if (isVerify.HasValue)
-            {
-                return isVerify.Value ? transition.ToState : currentState;
-            }
-
-            return transition.ToState;
+            var transitions = Transitions.Where(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
+            var validSpecificTransition = transitions.OfType<SpecificTransition<TState, TTrigger, TObjectToVerify>>()
+                .FirstOrDefault(t => t.Verify(itemToVerify));
+            return validSpecificTransition == null ? GetNextState(currentState, trigger) : validSpecificTransition.ToState;
         }
     }
 }

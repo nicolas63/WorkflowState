@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WorkflowState.Core.Exceptions;
 
 namespace WorkflowState.Core
 {
@@ -18,14 +17,8 @@ namespace WorkflowState.Core
 
         public TState GetNextState(TState currentState, TTrigger trigger)
         {
-
             var transition = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
-            if (transition == null)
-            {
-                throw new UnvalidTransitionException("This transition was unvalid verify your workflow configuration");
-            }
-            return transition.ToState;
-
+            return transition == null ? currentState : transition.ToState;
         }
     }
 

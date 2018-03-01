@@ -1,8 +1,6 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WorkflowState.Core;
-using WorkflowState.Core.Exceptions;
 using WorkflowState.Tests.Enums;
 
 namespace WorkflowState.Tests
@@ -28,10 +26,8 @@ namespace WorkflowState.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UnvalidTransitionException))]
-        public void Should_ThrowException_When_TransitionDoNotExist()
+        public void Should_ReturnCurrent_When_TransitionDoNotExist()
         {
-
             var workflow = new GenericWorkflow<EnumState, EnumTrigger>();
 
             workflow.Configure(conf =>
@@ -39,6 +35,8 @@ namespace WorkflowState.Tests
                 conf.CreateTransition(EnumState.Start, EnumState.Intermediate, EnumTrigger.StateChanged);
             });
             var state = workflow.GetNextState(EnumState.End, EnumTrigger.StateChanged);
+
+            state.Should().BeEquivalentTo(EnumState.End);
         }
     }
 }

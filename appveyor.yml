@@ -18,7 +18,7 @@ before_build:
 build_script:
   - cmd: nuget install secure-file -ExcludeVersion
   - cmd: secure-file\tools\secure-file -decrypt src/WorkflowState.Core/TheKey.snk.enc -secret %key_secret% -out src/WorkflowState.Core/TheKey.snk
-  - cmd: msbuild /p:AssemblyVersion=%GitVersion_AssemblySemVer% /p:Version=%GitVersion_InformationalVersion%  /p:FileVersion=%GitVersion_AssemblySemVer%  /property:Configuration=Release
+  - cmd: msbuild /p:AssemblyVersion=%GitVersion_AssemblySemVer%  /p:FileVersion=%GitVersion_InformationalVersion%  /property:Configuration=Release
 
 after_build:
   - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
