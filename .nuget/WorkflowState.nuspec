@@ -14,6 +14,6 @@
         </dependencies>
     </metadata>     
     <files>
-        <file src="..\src\WorkflowState.Core\bin\Release\netstandard2.0\WorkflowState.Core.dll" target="lib\netstandard2.0\WorflowState.Core.dll" />
+        <file src="..\src\WorkflowState.Core\bin\Release\netstandard2.0\WorkflowState.Core.dll" target="lib\netstandard2.0\WorkflowState.Core.dll" />
     </files>
 </package>
