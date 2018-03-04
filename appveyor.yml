@@ -15,6 +15,11 @@ before_build:
   - nuget restore
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
 
+branches:
+  only:
+    - master
+    - develop
+
 build_script:
   - cmd: nuget install secure-file -ExcludeVersion
   - cmd: secure-file\tools\secure-file -decrypt src/WorkflowState.Core/TheKey.snk.enc -secret %key_secret% -out src/WorkflowState.Core/TheKey.snk
