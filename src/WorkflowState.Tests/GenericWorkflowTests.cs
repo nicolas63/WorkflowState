@@ -9,7 +9,7 @@ namespace WorkflowState.Tests
     public class GenericWorkflowTests
     {
         [TestMethod]
-        public void Should_ChangedState_When_WorkflowIsValid()
+        public void Should_ChangedState_When_TransitionIsValid()
         {
 
             var workflow = new GenericWorkflow<EnumState, EnumTrigger>();
@@ -19,10 +19,12 @@ namespace WorkflowState.Tests
                 conf.CreateTransition(EnumState.Start, EnumState.Intermediate, EnumTrigger.StateChanged);
                 conf.CreateTransition(EnumState.Intermediate, EnumState.End, EnumTrigger.StateChanged);
             });
-            var state = workflow.GetNextState(EnumState.Start, EnumTrigger.StateChanged);
-            state.Should().BeEquivalentTo(EnumState.Intermediate);
-            var state2 = workflow.GetNextState(EnumState.Intermediate, EnumTrigger.StateChanged);
-            state2.Should().BeEquivalentTo(EnumState.End);
+            var stateInformation = workflow.GetNextState(EnumState.Start, EnumTrigger.StateChanged);
+            stateInformation.State.Should().BeEquivalentTo(EnumState.Intermediate);
+            stateInformation.HasChangedState.Should().BeTrue();
+            var stateInformation2 = workflow.GetNextState(EnumState.Intermediate, EnumTrigger.StateChanged);
+            stateInformation2.State.Should().BeEquivalentTo(EnumState.End);
+            stateInformation2.HasChangedState.Should().BeTrue();
         }
 
         [TestMethod]
@@ -34,9 +36,11 @@ namespace WorkflowState.Tests
             {
                 conf.CreateTransition(EnumState.Start, EnumState.Intermediate, EnumTrigger.StateChanged);
             });
-            var state = workflow.GetNextState(EnumState.End, EnumTrigger.StateChanged);
+            var stateInformation = workflow.GetNextState(EnumState.End, EnumTrigger.StateChanged);
 
-            state.Should().BeEquivalentTo(EnumState.End);
+            stateInformation.State.Should().BeEquivalentTo(EnumState.End);
+            stateInformation.HasChangedState.Should().BeFalse();
         }
+
     }
 }

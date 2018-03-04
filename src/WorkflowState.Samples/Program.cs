@@ -19,9 +19,9 @@ namespace WorkflowState.Samples
                 conf.CreateTransition(startState, endState, trigger).AsFirstTransition().AsLastTransition();
             });
 
-            var state = workflow.GetNextState(startState, trigger);
+            var stateInformation = workflow.GetNextState(startState, trigger);
 
-            Console.WriteLine(state.Name);
+            Console.WriteLine(stateInformation.State.Name);
 
             var graph = GraphHelper.ExportWorkflow(workflow);
 
@@ -34,11 +34,11 @@ namespace WorkflowState.Samples
                 conf.CreateTransition(startState, endState, trigger, i => i >2);
             });
 
-            var state2 = specificWorkflow.GetNextState(startState, trigger,1);
-            Console.WriteLine(state2.Name);
+            var stateInformation2 = specificWorkflow.GetNextState(startState, trigger,1);
+            Console.WriteLine(stateInformation2.State.Name);
 
-            var state3 = specificWorkflow.GetNextState(startState, trigger, 3);
-            Console.WriteLine(state3.Name);
+            var stateInformation3 = specificWorkflow.GetNextState(startState, trigger, 3);
+            Console.WriteLine(stateInformation3.State.Name);
 
             
             var specificWorkflow2 = new SpecificWorkflow<EnumState, EnumTrigger, int>();
@@ -50,11 +50,11 @@ namespace WorkflowState.Samples
                 conf.CreateTransition(EnumState.Intermediate, EnumState.Start, EnumTrigger.StateChanged, i => i < 2);
             });
 
-            var state4 = specificWorkflow2.GetNextState(EnumState.Start, EnumTrigger.StateChanged, 1);
-            Console.WriteLine(state4);
+            var stateInformation4 = specificWorkflow2.GetNextState(EnumState.Start, EnumTrigger.StateChanged, 1);
+            Console.WriteLine(stateInformation4.State);
 
-            var state5 = specificWorkflow2.GetNextState(EnumState.Intermediate, EnumTrigger.StateChanged, 3);
-            Console.WriteLine(state5);
+            var stateInformation5 = specificWorkflow2.GetNextState(EnumState.Intermediate, EnumTrigger.StateChanged, 3);
+            Console.WriteLine(stateInformation5.State);
             var graph2 = GraphHelper.ExportWorkflow(specificWorkflow2);
 
             Console.WriteLine(graph2);
