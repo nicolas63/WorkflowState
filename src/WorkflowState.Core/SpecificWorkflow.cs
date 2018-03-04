@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using WorkflowState.Core.Exceptions;
 
 namespace WorkflowState.Core
 {
@@ -13,12 +12,13 @@ namespace WorkflowState.Core
             Transitions = workflowConfiguration.Transitions;
         }
 
-        public TState GetNextState(TState currentState, TTrigger trigger, TObjectToVerify itemToVerify)
+        public StateInformation<TState> GetNextState(TState currentState, TTrigger trigger, TObjectToVerify itemToVerify)
         {
             var transitions = Transitions.Where(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
             var validSpecificTransition = transitions.OfType<SpecificTransition<TState, TTrigger, TObjectToVerify>>()
                 .FirstOrDefault(t => t.Verify(itemToVerify));
-            return validSpecificTransition == null ? GetNextState(currentState, trigger) : validSpecificTransition.ToState;
+            return validSpecificTransition == null ? GetNextState(currentState, trigger) 
+                : new StateInformation<TState> { State = validSpecificTransition.ToState, HasChangedState = true };
         }
     }
 }
