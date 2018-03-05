@@ -47,5 +47,26 @@ namespace WorkflowState.Tests
             stateInformation2.State.Should().BeEquivalentTo(PersonStateEnum.Registered);
             stateInformation2.HasChangedState.Should().BeFalse();
         }
+
+
+        [TestMethod]
+        public void Should_CallOnSucces_WhenChangedState()
+        {
+            var workflow = new SpecificWorkflow<PersonStateEnum, PersonTriggerEnum, Person>();
+
+            workflow.Configure(conf =>
+            {
+                conf.CreateTransition(PersonStateEnum.Anonymous, PersonStateEnum.Registered, PersonTriggerEnum.EnterInformation);
+                conf.CreateTransition(PersonStateEnum.Registered, PersonStateEnum.Premium, PersonTriggerEnum.Order,
+                    p => p.NumberOfOrder > 15, p => p.NumberOfOrder++);
+            });
+
+            var person = new Person() { NumberOfOrder = 16 };
+
+            workflow.GetNextState(PersonStateEnum.Registered, PersonTriggerEnum.Order, person);
+
+            person.NumberOfOrder.Should().Be(17);
+
+        }
     }
 }

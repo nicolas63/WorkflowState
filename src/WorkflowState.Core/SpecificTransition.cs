@@ -3,15 +3,18 @@ using System.Linq.Expressions;
 
 namespace WorkflowState.Core
 {
-    public class SpecificTransition<TState,TTrigger,TWorkflowItem> : GenericTransition<TState,TTrigger>
+    public class SpecificTransition<TState,TTrigger, TObjectToVerify> : GenericTransition<TState,TTrigger>
     {
-        internal Expression<Func<TWorkflowItem, bool>> ExpressionToVerify { get; }
+        internal Expression<Func<TObjectToVerify, bool>> ExpressionToVerify { get; }
+        public new Action<TObjectToVerify> OnSuccess { get; }
 
-        internal Func<TWorkflowItem, bool> Verify => ExpressionToVerify.Compile();
+        internal Func<TObjectToVerify, bool> Verify => ExpressionToVerify.Compile();
 
-        public SpecificTransition(TState fromState, TState toState, TTrigger when, Expression<Func<TWorkflowItem, bool>> verify) : base(fromState, toState, when)
+        public SpecificTransition(TState fromState, TState toState, TTrigger when, Expression<Func<TObjectToVerify, bool>> verify, Action<TObjectToVerify> onSuccess = null)
+            : base(fromState, toState, when)
         {
             ExpressionToVerify = verify;
+            OnSuccess = onSuccess;
         }
     }
 }

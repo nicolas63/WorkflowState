@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WorkflowState.Core
 {
@@ -6,9 +7,9 @@ namespace WorkflowState.Core
     {
         internal IList<GenericTransition<TState,TTrigger>> Transitions { get; } = new List<GenericTransition<TState, TTrigger>>();
 
-        public GenericTransition<TState, TTrigger> CreateTransition(TState fromState , TState toState, TTrigger when)
+        public GenericTransition<TState, TTrigger> CreateTransition(TState fromState , TState toState, TTrigger when,Action onSuccess)
         {
-            var transition = new GenericTransition<TState, TTrigger>(fromState, toState, when);
+            var transition = new GenericTransition<TState, TTrigger>(fromState, toState, when,onSuccess);
             Transitions.Add(transition);
             return transition;
         }

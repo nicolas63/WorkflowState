@@ -1,4 +1,7 @@
-﻿namespace WorkflowState.Core
+﻿using System;
+using System.Linq.Expressions;
+
+namespace WorkflowState.Core
 {
     public class GenericTransition<TState, TTrigger>
     {
@@ -7,12 +10,14 @@
         internal TTrigger When { get; }
         internal bool IsFirstTransition { get; private set; }
         internal bool IsLastTransition { get; private set; }
-        
-        public GenericTransition(TState fromState, TState toState, TTrigger when)
+        internal Action OnSuccess { get; }
+
+        public GenericTransition(TState fromState, TState toState, TTrigger when,Action onSuccess =null )
         {
             FromState = fromState;
             ToState = toState;
             When = when;
+            OnSuccess = onSuccess;
         }
 
         public GenericTransition<TState, TTrigger> AsFirstTransition()

@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WorkflowState.Core\WorkflowState.Core.csproj">
-      <Project>{A9A6401E-DA9C-49F1-845B-A9F6DC7B6409}</Project>
+      <Project>{a9a6401e-da9c-49f1-845b-a9f6dc7b6409}</Project>
       <Name>WorkflowState.Core</Name>
     </ProjectReference>
   </ItemGroup>

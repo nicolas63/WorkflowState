@@ -8,6 +8,8 @@ namespace WorkflowState.Tests
     [TestClass]
     public class GenericWorkflowTests
     {
+        private static int count; 
+
         [TestMethod]
         public void Should_ChangedState_When_TransitionIsValid()
         {
@@ -42,5 +44,20 @@ namespace WorkflowState.Tests
             stateInformation.HasChangedState.Should().BeFalse();
         }
 
+
+        [TestMethod]
+        public void Should_CallOnSucces_WhenChangedState()
+        {
+            var workflow = new GenericWorkflow<EnumState, EnumTrigger>();
+
+            workflow.Configure(conf =>
+            {
+                conf.CreateTransition(EnumState.Start, EnumState.Intermediate, EnumTrigger.StateChanged, () => count++);
+            });
+
+            workflow.GetNextState(EnumState.Start, EnumTrigger.StateChanged);
+
+            count.Should().Be(1);
+        }
     }
 }

@@ -17,8 +17,13 @@ namespace WorkflowState.Core
             var transitions = Transitions.Where(t => t.FromState.Equals(currentState) && t.When.Equals(trigger));
             var validSpecificTransition = transitions.OfType<SpecificTransition<TState, TTrigger, TObjectToVerify>>()
                 .FirstOrDefault(t => t.Verify(itemToVerify));
-            return validSpecificTransition == null ? GetNextState(currentState, trigger) 
-                : new StateInformation<TState> { State = validSpecificTransition.ToState, HasChangedState = true };
+            if (validSpecificTransition == null)
+            {
+                return GetNextState(currentState, trigger);
+            }
+
+            validSpecificTransition.OnSuccess(itemToVerify);
+            return new StateInformation<TState> {State = validSpecificTransition.ToState, HasChangedState = true};
         }
     }
 }

@@ -18,9 +18,13 @@ namespace WorkflowState.Core
         public StateInformation<TState> GetNextState(TState currentState, TTrigger trigger)
         {
             var transition = Transitions.FirstOrDefault(t => t.FromState.Equals(currentState) && t.When.Equals(trigger) && t.GetType() == typeof(GenericTransition<TState,TTrigger>));
-            return transition == null
-                ? new StateInformation<TState> {State = currentState}
-                : new StateInformation<TState> {State = transition.ToState, HasChangedState = true};
+            if (transition == null)
+            {
+                return new StateInformation<TState> {State = currentState};
+            }
+
+            transition.OnSuccess?.Invoke();
+            return new StateInformation<TState> {State = transition.ToState, HasChangedState = true};
         }
     }
 
