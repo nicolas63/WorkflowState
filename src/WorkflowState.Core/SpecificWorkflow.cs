@@ -22,7 +22,7 @@ namespace WorkflowState.Core
                 return GetNextState(currentState, trigger);
             }
 
-            validSpecificTransition.OnSuccess(itemToVerify);
+            validSpecificTransition.OnSuccess?.Invoke(itemToVerify);
             return new StateInformation<TState> {State = validSpecificTransition.ToState, HasChangedState = true};
         }
     }
