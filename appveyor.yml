@@ -1,5 +1,11 @@
 image: Visual Studio 2017 Preview
 
+skip_branch_with_pr: true
+skip_tags: true
+skip_commits:
+  files:
+- '**/*.md'
+
 environment:
   key_secret:
     secure: rI0polHQH7k8Jt8OPzJVHw==

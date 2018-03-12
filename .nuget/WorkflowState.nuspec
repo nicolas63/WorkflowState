@@ -9,6 +9,7 @@
         <licenseUrl>https://github.com/nicolas63/WorkflowState/blob/develop/LICENSE.md</licenseUrl>
         <projectUrl>https://github.com/nicolas63/WorkflowState/tree/develop</projectUrl>
         <copyright>Copyright ©  2018</copyright>
+        <tags>graph state workflow dotnet-standard nuget csharp dotnet </tags>
         <dependencies>
              <group targetFramework=".NETStandard2.0" />
         </dependencies>
