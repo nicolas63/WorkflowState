@@ -1,0 +1,48 @@
+image: Visual Studio 2017
+
+skip_branch_with_pr: true
+skip_tags: true
+skip_commits:
+  files:
+    - '**/*.md'
+
+environment:
+  key_secret:
+    secure: rI0polHQH7k8Jt8OPzJVHw==
+
+install:
+  - choco install gitversion.portable -pre -y
+
+assembly_info:
+  patch: false
+
+before_build:
+  - dotnet restore
+  - nuget restore
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+
+branches:
+  only:
+    - master
+    - develop
+
+build_script:
+  - cmd: nuget install secure-file -ExcludeVersion
+  - cmd: secure-file\tools\secure-file -decrypt src/WorkflowState.Core/TheKey.snk.enc -secret %key_secret% -out src/WorkflowState.Core/TheKey.snk
+  - cmd: msbuild /p:AssemblyVersion=%GitVersion_AssemblySemVer% /p:ProductVersion=%GitVersion_InformationalVersion%  /p:FileVersion=%GitVersion_MajorMinorPatch%  /property:Configuration=Release
+
+after_build:
+  - cmd: nuget pack .nuget/WorkflowState.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+
+test_script:
+  - cmd: dotnet test src/WorkflowState.Tests/WorkflowState.Tests.csproj --configuration release
+
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: DiBe9NHNckgVo/QjZqlPU4OUYQ5YtuF8w9GpQzQkgj5Nio+ElpZGQdj6V4EENyJa
+    skip_symbols: true
+
+artifacts:
+  - path: '*.nupkg'
+    name: WorkflowState
